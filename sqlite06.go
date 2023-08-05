@@ -1,5 +1,9 @@
 package sqlite06
 
+// https://zetcode.com/golang/sqlite3/
+// https://earthly.dev/blog/golang-sqlite/
+// Officail site: https://github.com/mattn/go-sqlite3
+
 import (
 	"database/sql"
 	"errors"
