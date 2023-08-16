@@ -1,16 +1,12 @@
 package sqlite06
 
-// https://zetcode.com/golang/sqlite3/
-// https://earthly.dev/blog/golang-sqlite/
-// Officail site: https://github.com/mattn/go-sqlite3
-
 import (
 	"database/sql"
 	"errors"
 	"fmt"
 	"strings"
 
-	"github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 // Connection details
@@ -81,7 +77,7 @@ func AddUser(d Userdata) int {
 
 	userID := exists(d.Username)
 	if userID != -1 {
-		fmt.Println("User already exists:", Username)
+		fmt.Println("User already exists:", d.Username)
 		return -1
 	}
 
