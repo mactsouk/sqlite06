@@ -113,7 +113,7 @@ func DeleteUser(id int) error {
 	defer db.Close()
 
 	// Does the ID exist?
-	statement := fmt.Sprintf(`SELECT "Username" FROM "Users" where ID = %d`, id)
+	statement := fmt.Sprintf(`SELECT Username FROM Users WHERE ID = %d`, id)
 	rows, err := db.Query(statement)
 
 	var username string
@@ -130,7 +130,7 @@ func DeleteUser(id int) error {
 	}
 
 	// Delete from Userdata
-	deleteStatement := `DELETE FROM Userdata where UserID = ?`
+	deleteStatement := `DELETE FROM Userdata WHERE UserID = ?`
 	_, err = db.Exec(deleteStatement, id)
 	if err != nil {
 		return err
