@@ -81,7 +81,7 @@ func AddUser(d Userdata) int {
 		return -1
 	}
 
-	insertStatement := `insert into Users ("username") values ($1)`
+	insertStatement := `INSERT INTO Users ("username") values ( ? )`
 	_, err = db.Exec(insertStatement, d.Username)
 	if err != nil {
 		fmt.Println(err)
@@ -155,8 +155,8 @@ func ListUsers() ([]Userdata, error) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query(`SELECT "id","username","name","surname","description"
-		FROM Users,Userdata WHERE Users.ID = Userdata.UserID`)
+	rows, err := db.Query(`SELECT ID, Username, Name, Surname, Description
+		FROM Users, Userdata WHERE Users.ID = Userdata.UserID`)
 	if err != nil {
 		return Data, err
 	}
@@ -191,7 +191,7 @@ func UpdateUser(d Userdata) error {
 		return errors.New("User does not exist")
 	}
 	d.ID = userID
-	updateStatement := `update "Userdata" set "name"=$1, "surname"=$2, "description"=$3 where "userid"=$4`
+	updateStatement := `UPDATE Userdata set Name = ?, Surname = ?, Description = ? where UserID = ?`
 	_, err = db.Exec(updateStatement, d.Name, d.Surname, d.Description, d.ID)
 	if err != nil {
 		return err
