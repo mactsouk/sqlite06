@@ -46,14 +46,14 @@ func exists(username string) int {
 	defer db.Close()
 
 	userID := -1
-	statement := fmt.Sprintf(`SELECT id FROM Users where username = '%s'`, username)
+	statement := fmt.Sprintf(`SELECT ID FROM Users where Username = '%s'`, username)
 	rows, err := db.Query(statement)
 
 	for rows.Next() {
 		var id int
 		err = rows.Scan(&id)
 		if err != nil {
-			fmt.Println("Scan", err)
+			fmt.Println("exists() Scan", err)
 			return -1
 		}
 		userID = id
