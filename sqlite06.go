@@ -25,7 +25,6 @@ type Userdata struct {
 }
 
 func openConnection() (*sql.DB, error) {
-	// open database
 	db, err := sql.Open("sqlite3", Filename)
 	if err != nil {
 		return nil, err
@@ -81,7 +80,7 @@ func AddUser(d Userdata) int {
 		return -1
 	}
 
-	insertStatement := `INSERT INTO Users ("username") values ( ? )`
+	insertStatement := `INSERT INTO Users values (NULL,?)`
 	_, err = db.Exec(insertStatement, d.Username)
 	if err != nil {
 		fmt.Println(err)
@@ -93,8 +92,7 @@ func AddUser(d Userdata) int {
 		return userID
 	}
 
-	insertStatement = `INSERT INTO Userdata ("userid", "name", "surname", "description")
-	values ($1, $2, $3, $4)`
+	insertStatement = `INSERT INTO Userdata values (?, ?, ?, ?)`
 	_, err = db.Exec(insertStatement, userID, d.Name, d.Surname, d.Description)
 	if err != nil {
 		fmt.Println("db.Exec()", err)
@@ -166,9 +164,9 @@ func ListUsers() ([]Userdata, error) {
 		var username string
 		var name string
 		var surname string
-		var description string
-		err = rows.Scan(&id, &username, &name, &surname, &description)
-		temp := Userdata{ID: id, Username: username, Name: name, Surname: surname, Description: description}
+		var desc string
+		err = rows.Scan(&id, &username, &name, &surname, &desc)
+		temp := Userdata{ID: id, Username: username, Name: name, Surname: surname, Description: desc}
 		Data = append(Data, temp)
 		if err != nil {
 			return Data, err
